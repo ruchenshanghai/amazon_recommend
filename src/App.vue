@@ -5,7 +5,7 @@
       <router-link to="/about">About</router-link>
       <el-button v-if="currentUser" style="margin-left: 20px;"
                  @click.stop="userLogOut"
-                 type="text">Log out</el-button>
+                 type="text">{{ currentUser.username }}(Log out)</el-button>
     </div>
     <router-view/>
   </div>

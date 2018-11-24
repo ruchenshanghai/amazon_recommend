@@ -33,6 +33,7 @@
 
 <script lang="ts">
 import Vuex from 'vuex';
+import axios from 'axios';
 import { Component, Vue } from 'vue-property-decorator';
 
 @Component
@@ -47,31 +48,24 @@ export default class Login extends Vue {
       this.isSignUp = false;
     } else {
       // post to sign in
-      this.$store.commit('changeUser', {
-        id: 'id',
-        username: 'name',
-      });
-      this.$router.push({
-        name: 'home',
-      });
 
-      // const postUrl = 'http://10.141.246.21:9000/login?name=' + encodeURIComponent(this.username) +
-      //   '&pwd=' + encodeURIComponent(this.password);
-      // this.$http.post(postUrl).then((resp) => {
-      //   console.log(JSON.stringify(resp.data));
-      //   if (resp.data.status === 'ok') {
-      //     // sign in ok
-      //     this.$store.commit('changeUser', {
-      //       id: resp.data.id,
-      //       username: resp.data.name,
-      //     });
-      //     this.$router.push({
-      //       name: 'home',
-      //     });
-      //   } else {
-      //     this.$message.error('Username or Password not correct!');
-      //   }
-      // });
+      const postUrl = 'http://10.141.246.21:9000/login?name=' + encodeURIComponent(this.username) +
+        '&pwd=' + encodeURIComponent(this.password);
+      axios.post(postUrl).then((resp) => {
+        // console.log(resp.data);
+        if (resp.data.status === 'ok') {
+          // sign in ok
+          this.$store.commit('changeUser', {
+            id: resp.data.id,
+            username: resp.data.name,
+          });
+          this.$router.push({
+            name: 'home',
+          });
+        } else {
+          this.$message.error('Username or Password not correct!');
+        }
+      });
     }
   }
   private signUpClick() {
@@ -80,8 +74,8 @@ export default class Login extends Vue {
 
       // TODO just mock:
       this.$store.commit('changeUser', {
-        username: this.username,
-        password: this.password,
+        id: 'A001114613O3F18Q5NVR6',
+        username: 'adbLarryRun',
       });
       this.$router.push({
         name: 'home',

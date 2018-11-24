@@ -45,5 +45,6 @@
     "no-consecutive-blank-lines": false,
     "no-console": false,
     "member-access": false,
+    "noImplicitAny": false
   }
 }

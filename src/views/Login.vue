@@ -39,32 +39,34 @@ import { Component, Vue } from 'vue-property-decorator';
 export default class Login extends Vue {
   protected isSignUp: boolean = false;
   protected isSignUpPasswordRight: boolean = true;
-  private username: string = '';
-  private password: string = '';
+  private username: string = 'adbLarryRun';
+  private password: string = 'addb2204';
   private passwordAgain: string = '';
   private signInClick() {
     if (this.isSignUp) {
       this.isSignUp = false;
     } else {
       // post to sign in
-      // TODO just mock:
       this.$store.commit('changeUser', {
-        username: this.username,
-        password: this.password,
+        id: 'id',
+        username: 'name',
       });
       this.$router.push({
         name: 'home',
       });
 
-      // this.$http.post('http://xxxxx:xxx/xxx', {
-      //   username: this.username,
-      //   password: this.password,
-      // }).then((resp) => {
+      // const postUrl = 'http://10.141.246.21:9000/login?name=' + encodeURIComponent(this.username) +
+      //   '&pwd=' + encodeURIComponent(this.password);
+      // this.$http.post(postUrl).then((resp) => {
+      //   console.log(JSON.stringify(resp.data));
       //   if (resp.data.status === 'ok') {
       //     // sign in ok
       //     this.$store.commit('changeUser', {
-      //       username: this.username,
-      //       password: this.password,
+      //       id: resp.data.id,
+      //       username: resp.data.name,
+      //     });
+      //     this.$router.push({
+      //       name: 'home',
       //     });
       //   } else {
       //     this.$message.error('Username or Password not correct!');

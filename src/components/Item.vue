@@ -24,6 +24,10 @@ export default class Item extends Vue {
   private mounted() {
     this.itemID = this.$route.params.ID;
     console.log(this.itemID);
+    this.$http.get('http://10.141.246.21:9000/item/0000032034')
+      .then((resp) => {
+        console.log(resp.data);
+      });
   }
 }
 </script>

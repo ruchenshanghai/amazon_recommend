@@ -87,7 +87,7 @@ login, just check id, password can be ignored
 			{ 'status':'ok','id': '#idForRecommendationAPI', 'name':'#idForLogin'}, name is reviewerName in review file.
 		else；
 			{ 'status':'error','message':'nouser/wrongpassword' }
-	example: POST http://10.141.246.21:9000/login  with body like{'account':'adbLarryRun','password':'addb2204'}
+	example: POST http://10.141.246.21:9000/login  with body like{'name':'adbLarryRun','pwd':'addb2204'}
 		
 		result:
 			{

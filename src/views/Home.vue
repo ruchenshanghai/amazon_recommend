@@ -8,8 +8,8 @@
     <template v-else>
       <el-row>
         <el-button @click="itemsParam = 'items/hot'">Hot items</el-button>
-        <el-button @click="itemsParam = 'items/' + currentUser.username">Customized items</el-button>
-        <el-button @click="itemsParam = 'reviews/' + currentUser.username">Review records</el-button>
+        <el-button @click="itemsParam = 'items/' + currentUser.id">Customized items</el-button>
+        <el-button @click="itemsParam = 'reviews/' + currentUser.id">Review records</el-button>
       </el-row>
       <ItemList v-if="itemsParam" :param="itemsParam"></ItemList>
     </template>

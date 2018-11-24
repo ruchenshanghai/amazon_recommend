@@ -3,10 +3,32 @@
     <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
+      <el-button v-if="currentUser" style="margin-left: 20px;"
+                 @click.stop="userLogOut"
+                 type="text">Log out</el-button>
     </div>
     <router-view/>
   </div>
 </template>
+
+<script lang="ts">
+import Vuex from 'vuex';
+import { Component, Vue } from 'vue-property-decorator';
+@Component({
+  computed: {
+    currentUser() {
+      return this.$store.getters.currentUser;
+    },
+  },
+})
+
+export default class App extends Vue {
+  private userLogOut() {
+    this.$store.commit('changeUser', null);
+  }
+}
+</script>
+
 
 <style lang="scss">
 #app {

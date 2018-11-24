@@ -1,0 +1,32 @@
+<template>
+  <div>
+    <el-row v-if="itemID">
+      <el-col :span="4">
+        <el-tag>Display {{ itemID }}'s detail</el-tag>
+      </el-col>
+    </el-row>
+  </div>
+</template>
+
+<script lang="ts">
+import { Component, Watch, Vue } from 'vue-property-decorator';
+
+@Component({
+  mounted() {
+    this.itemID = this.$route.params.ID;
+    console.log(this.itemID);
+  }
+})
+export default class Item extends Vue {
+  private itemID: string = null;
+
+  @Watch('itemID')
+  private onItemIDChange() {
+    console.log('ID changed ' + this.itemID);
+  }
+}
+</script>
+
+<style scoped>
+
+</style>

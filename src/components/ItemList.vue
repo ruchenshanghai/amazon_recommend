@@ -7,7 +7,7 @@
           <el-tag type="success">{{ item.typeName }}</el-tag>
         </el-col>
         <el-col :span="24" v-for="(i, iIdx) in item.data" :key="'items' + iIdx">
-          <router-link :to="{name: 'item', params: { ID: i.id}}" target='_blank'>
+          <router-link :to="{name: 'item', params: { ID: i.id}}">
             <el-button type="text">{{ i.title }}</el-button>
           </router-link>
         </el-col>
@@ -23,7 +23,7 @@
           <el-tag type="info">{{ item.asin }}</el-tag>
         </el-col>
         <el-col :span="6">
-          <router-link :to="{name: 'item', params: { ID: item.id}}" target='_blank'>
+          <router-link :to="{name: 'item', params: { ID: item.id}}">
             <el-tag type="info">{{ item.id }}</el-tag>
           </router-link>
         </el-col>

@@ -11,18 +11,18 @@
 <script lang="ts">
 import { Component, Watch, Vue } from 'vue-property-decorator';
 
-@Component({
-  mounted() {
-    this.itemID = this.$route.params.ID;
-    console.log(this.itemID);
-  }
-})
+@Component
 export default class Item extends Vue {
-  private itemID: string = null;
+  private itemID: string = '';
 
   @Watch('itemID')
   private onItemIDChange() {
     console.log('ID changed ' + this.itemID);
+  }
+
+  private mounted() {
+    this.itemID = this.$route.params.ID;
+    console.log(this.itemID);
   }
 }
 </script>

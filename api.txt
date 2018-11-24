@@ -1,0 +1,202 @@
+﻿1. saved files
+reviews: 
+filename(category)	records number
+0	reviews_Amazon_Instant_Video_5.json	37126
+1	reviews_Automotive_5.json	20473
+2	reviews_Baby_5.json	160792
+3	reviews_Beauty_5.json	198502
+4	reviews_Cell_Phones_and_Accessories_5.json	194439
+5	reviews_Clothing_Shoes_and_Jewelry_5.json	278677
+6	reviews_Digital_Music_5.json	64706
+7	reviews_Grocery_and_Gourmet_Food_5.json	151254
+8	reviews_Musical_Instruments_5.json	10261
+9	reviews_Office_Products_5.json	53258
+10	reviews_Patio_Lawn_and_Garden_5.json	13272
+11	reviews_Pet_Supplies_5.json	157836
+12	reviews_Tools_and_Home_Improvement_5.json	134476
+13	reviews_Toys_and_Games_5.json	167597
+
+item metadata: metadata.json
+
+2. Recommendation API
+
+recommendation according to user's preference
+	url:
+
+		/users/{id}, id example: A2SUAM1J3GNN3B
+		get
+		
+	return: 
+		return new items that current user may like.
+
+		file format: json	
+			{
+			'Amazon_Instant_Video': [[item_id1, score], ,....],
+			....
+			'reviews_Toys_and_Games': [[item_id1, score], [item_id2, score],....]
+			}
+			max_item_num of each category: 20
+
+	example:
+		http://10.141.246.21:4399/users/A00097001C4CLB27DQV4U
+		test users:
+			+-----------------------+-----------------------+
+			| id                    | name                  |
+			+-----------------------+-----------------------+
+			| A00097001C4CLB27DQV4U | adbLinette87          |
+			| A001114613O3F18Q5NVR6 | adbLarryRun           |
+			| A00126503SUWI86KZBMIN | adbMargaret           |
+			| A00146182PNM90WNNAZ5Q | adbMarisol            |
+			| A00165422B2GAUE3EL6Z0 | Jaclyn Broderick      |
+			| A00177463W0XWB16A9O05 | acethisplace          |
+			| A00338282E99B8OR2JYTZ | shelley hull          |
+			| A00354001GE099Q1FL0TU | Csar Izaguirre        |
+			| A00404823GU1Q517KP4Z8 | Nancy in So. Carolina |
+			| A00414041RD0BXM6WK0GX | Sarah Hale            |
+			+-----------------------+-----------------------+
+
+	
+# recommendation according to the similarity between items:
+#	no need to implement, just use the relation(like also_bought) in the metadata file.
+	
+3. Web sever
+
+List of categories:{
+	Amazon_Instant_Video
+	Automotive
+	Baby
+	Beauty
+	Cell_Phones_and_Accessories
+	Clothing_Shoes_and_Jewelry
+	Digital_Music
+	Grocery_and_Gourmet_Food
+	Musical_Instruments
+	Office_Products
+	Patio_Lawn_and_Garden
+	Pet_Supplies
+	Tools_and_Home_Improvement
+	Toys_and_Games
+}
+
+login, just check id, password can be ignored
+	url: 
+		/login
+		post, paramater: {'name': '#idForLogin', 'pwd': ''}
+	return:
+		if ok:
+			{ 'status':'ok','id': '#idForRecommendationAPI', 'name':'#idForLogin'}, name is reviewerName in review file.
+		else；
+			{ 'status':'error','message':'nouser/wrongpassword' }
+	example: POST http://10.141.246.21:9000/login  with body like{'account':'adbLarryRun','password':'addb2204'}
+		
+		result:
+			{
+				"status": ok
+ 				"id": "A001114613O3F18Q5NVR6",
+				"name": "adbLarryRun"
+			}
+	
+
+			
+get hot items
+	url:
+		/items/hot
+	return:
+		hot items, just select some items randomly
+		{
+			'Amazon_Instant_Video': [item_Json, item_id2,....],
+			....
+			'reviews_Toys_and_Games': [item_Json, item_Json2,....]
+		}
+		item_Json = {'asin': '', 'title': '', 'imUrl': ''} 
+		max_item_num of each category: 10
+	
+	example: GET  http://10.141.246.21:9000/items/hot
+
+	result:
+		{
+			"Beauty":[null,null,null,null,null,null,null,null,null],
+			"Clothing_Shoes_and_Jewelry":[{"imUrl":"http://ecx.images-amazon.com/images/I/314qZjYevsL.jpg","asin":"0000031887","id":"5bed9825f3e9e96d4cb71f51","title":"Ballet Dress-Up Fairy Tutu"},{"imUrl":"http://ecx.images-amazon.com/images/I/413tGhqoOTL._SY300_.jpg","asin":"0123456479","id":"5bf8fdd16735d905e0bb1a13","title":"SHINING IMAGE HUGE PINK LEATHER JEWELRY BOX / CASE / STORAGE / ORGANIZER WITH TRAVEL CASE AND LOCK"},null,null,null,null,null,null,null],"Baby":[null,null,null,null,null,null,null,null,null],
+			"Grocery_and_Gourmet_Food":[......],
+			......
+		}
+
+		
+get recommendation to certain user
+	url:
+		/items/{user_id}
+	return:
+		first request Recommendation API /users/{id} to get item ids,
+		then return json as same as /items/hot
+
+	example: GET http://10.141.246.21:9000/items/A00097001C4CLB27DQV4U
+
+	result:
+			{
+				"Beauty":[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],
+				"Clothing_Shoes_and_Jewelry":[......],
+				......
+			}
+
+		
+get review records of a certain usr
+	url:
+		/reviews/{usr_id}
+	return
+		[
+			review json
+				......
+
+		]
+
+	example: GET  http://10.141.246.21:9000/reviews/A11N155CW1UV02
+
+	result:
+		[
+			{	"summary":"A little bit boring for me",
+				"reviewerName":"AdrianaM",
+				"reviewerID":"A11N155CW1UV02",
+				"overall":"2.0",
+				"asin":"B000H00VBQ",
+				"unixReviewTime":"1399075200",
+				"id":"5bed3c77f3e9e98d4c1f25be",
+				"reviewText":"I had big expectations because I love English TV, in particular Investigative and detective stuff but this guy is really boring. It didn't appeal to me at all.",
+				"reviewTime":"05 3, 2014"},
+				......
+
+		]
+		
+
+get item detail
+	url:
+		/item/{id}, id is item id
+	return:
+		full item metadata json file
+
+	example: GET  http://10.141.246.21:9000/item/0000032034
+	
+	result:
+		{"data":
+			{	"id":"5bed9824f3e9e96d4cb71f2a",
+				"asin":"0000032034",
+				"title":"Adult Ballet Tutu Yellow",
+				"imUrl":"http://ecx.images-amazon.com/images/I/21GNUNIa1CL.jpg",
+				"price":"7.87",
+				"brand":"BubuBibi",
+				"description":null,
+				"categories":"Sports & Outdoors,Other Sports,Dance,Clothing,Girls,Skirts"
+			}
+		}
+			
+
+4. Web client(Beauty is first.)
+
+	Homepage: see amazon home page, show recommendation of each category(if have login), or hot items instead().
+			show img (and title) of each item.
+			
+	Item detail page: see amazon item detail pape.
+			show metadata properly.
+	
+	Review records page of a certain user: show review records
+	
+	Login pape：

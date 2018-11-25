@@ -7,8 +7,9 @@
           <el-tag type="success">{{ item.typeName }}</el-tag>
         </el-col>
         <el-col :span="24" v-for="(i, iIdx) in item.data" :key="'items' + iIdx">
-          <router-link :to="{name: 'item', params: { ID: i.id}}">
-            <el-button type="text">{{ i.title }}</el-button>
+          <router-link :to="{name: 'item', params: { ID: i.asin}}" class="item-list-link">
+            <img v-if="i.imUrl" :src="i.imUrl" class="item-list-img" />
+            <div class="item-list-label">{{ i.title }}</div>
           </router-link>
         </el-col>
       </template>
@@ -20,11 +21,8 @@
           <el-tag type="info">{{ item.overall }}</el-tag>
         </el-col>
         <el-col :span="6">
-          <el-tag type="info">{{ item.asin }}</el-tag>
-        </el-col>
-        <el-col :span="6">
-          <router-link :to="{name: 'item', params: { ID: item.id}}">
-            <el-tag type="info">{{ item.id }}</el-tag>
+          <router-link :to="{name: 'item', params: { ID: item.asin}}">
+            <el-tag type="info">ASIN: {{ item.asin }}</el-tag>
           </router-link>
         </el-col>
         <el-col :span="24">
@@ -152,6 +150,19 @@ export default class ItemList extends Vue {
 }
 </script>
 
-<style scoped>
-
+<style scoped lang="scss">
+  .item-list-link {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    .item-list-img {
+      max-width: 100px;
+      max-height: 100px;
+    }
+    .item-list-label {
+      display: flex;
+      align-items: center;
+      max-width: 300px;
+    }
+  }
 </style>

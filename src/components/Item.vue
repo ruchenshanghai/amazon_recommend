@@ -3,11 +3,28 @@
     <el-row v-if="itemID">
       <el-col :span="4">
         <el-tag>Display {{ itemID }}'s detail</el-tag>
-        <template v-if="!itemData">
-          <h4>No Data</h4>
-          <img src="http://ecx.images-amazon.com/images/I/51EzU6quNML._SX342_.jpg">
-        </template>
       </el-col>
+
+      <template v-if="!itemData">
+        <el-col :span="24">
+          <h4>No Data</h4>
+          <img src="http://ecx.images-amazon.com/images/I/51EzU6quNML._SX342_.jpg" />
+        </el-col>
+      </template>
+      <template v-else>
+        <el-col :span="24">
+          <el-tag type="success">title: {{ itemData.title }}</el-tag>
+        </el-col>
+        <el-col :span="24">
+          <el-tag type="info" class="info-tag">categories: {{ itemData.categories }}</el-tag>
+          <el-tag type="info" class="info-tag">brand: {{ itemData.brand }}</el-tag>
+          <el-tag type="info" class="info-tag">price: {{ itemData.price }}</el-tag>
+        </el-col>
+        <img v-if="itemData.imUrl" :src="itemData.imUrl" />
+        <el-col :span="24">
+          <p>description: <br />{{ itemData.description }}</p>
+        </el-col>
+      </template>
     </el-row>
   </div>
 </template>
@@ -38,6 +55,8 @@ export default class Item extends Vue {
 }
 </script>
 
-<style scoped>
-
+<style scoped lang="scss">
+.info-tag {
+  margin: 10px;
+}
 </style>

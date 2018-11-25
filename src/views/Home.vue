@@ -1,10 +1,13 @@
 <template>
   <div class="home">
     <h1>Welcome to Amazon Product Recommendation</h1>
-    <router-link v-if="!currentUser" :to="{name: 'login'}">
-      <img alt="Vue logo" src="../assets/logo.png">
-      <p>Please click here to login system and enjoy yourself!</p>
-    </router-link>
+    <template v-if="!currentUser">
+      <router-link :to="{name: 'login'}">
+        <p>Please click here to login system and enjoy yourself!</p>
+        <img alt="Vue logo" src="../assets/logo.png">
+      </router-link>
+      <ItemList param="items/hot"></ItemList>
+    </template>
     <template v-else>
       <el-row>
         <el-button @click="itemsParam = 'items/hot'">Hot items</el-button>

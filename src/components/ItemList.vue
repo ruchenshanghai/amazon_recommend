@@ -1,17 +1,20 @@
 <template>
   <div style="padding: 10px;">
     <h2>Fetch data by {{ param }}</h2>
-    <el-row v-for="(item, index) in itemsList" :key="index" :gutter="10">
+    <el-row v-for="(item, index) in itemsList" :key="index" :gutter="10" style="margin: 20px 0;">
       <template v-if="isItems">
         <el-col :span="6">
           <el-tag type="success">{{ item.typeName }}</el-tag>
         </el-col>
-        <el-col :span="24" v-for="(i, iIdx) in item.data" :key="'items' + iIdx">
-          <router-link :to="{name: 'item', params: { ID: i.asin}}" class="item-list-link">
-            <img v-if="i.imUrl" :src="i.imUrl" class="item-list-img" />
-            <div class="item-list-label">{{ i.title }}</div>
-          </router-link>
-        </el-col>
+        <el-carousel type="card">
+          <el-carousel-item v-for="(i, iIdx) in item.data" :key="'carousel' + iIdx" v-if="i.asin">
+            <router-link :to="{name: 'item', params: { ID: i.asin}}">
+              <el-tag v-if="i.title" type="info">{{ i.title }}</el-tag>
+              <el-tag type="info">{{ i.asin }}</el-tag>
+              <img v-if="i.imUrl" :src="i.imUrl" class="item-list-img" />
+            </router-link>
+          </el-carousel-item>
+        </el-carousel>
       </template>
       <template v-else-if="isReviews">
         <el-col :span="6">
@@ -151,18 +154,4 @@ export default class ItemList extends Vue {
 </script>
 
 <style scoped lang="scss">
-  .item-list-link {
-    display: flex;
-    justify-content: center;
-    margin-top: 10px;
-    .item-list-img {
-      max-width: 100px;
-      max-height: 100px;
-    }
-    .item-list-label {
-      display: flex;
-      align-items: center;
-      max-width: 300px;
-    }
-  }
 </style>

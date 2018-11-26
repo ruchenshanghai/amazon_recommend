@@ -6,15 +6,18 @@
         <el-col :span="6">
           <el-tag type="success">{{ item.typeName }}</el-tag>
         </el-col>
-        <el-carousel type="card">
-          <el-carousel-item v-for="(i, iIdx) in item.data" :key="'carousel' + iIdx" v-if="i.asin">
-            <router-link :to="{name: 'item', params: { ID: i.asin}}">
-              <el-tag v-if="i.title" type="info">{{ i.title }}</el-tag>
-              <el-tag type="info">{{ i.asin }}</el-tag>
-              <img v-if="i.imUrl" :src="i.imUrl" class="item-list-img" />
-            </router-link>
-          </el-carousel-item>
-        </el-carousel>
+        <el-col :span="24">
+          <el-carousel type="card" :autoplay="false">
+            <el-carousel-item v-for="(i, iIdx) in item.data"
+                              :key="'carousel' + iIdx" v-if="i.asin">
+              <div class="carousel-div" @click="$router.push({name: 'item', params: { ID: i.asin}})">
+                <div class="info-div">{{ i.title }}</div>
+                <div class="info-div">{{ i.asin }}</div>
+                <img v-if="i.imUrl" :src="i.imUrl" class="item-list-img" />
+              </div>
+            </el-carousel-item>
+          </el-carousel>
+        </el-col>
       </template>
       <template v-else-if="isReviews">
         <el-col :span="6">
@@ -154,4 +157,26 @@ export default class ItemList extends Vue {
 </script>
 
 <style scoped lang="scss">
+  .info-div {
+    background-color: rgba(144,147,153,.1);
+    color: #909399;
+    padding: 0 10px;
+    line-height: 30px;
+    font-size: 12px;
+    border-radius: 4px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    border: 1px solid rgba(144,147,153,.2);
+    max-width: 200px;
+    max-height: 60px;
+    overflow: hidden;
+    margin: 5px 0;
+  }
+  .carousel-div {
+    padding: 0 10px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 </style>

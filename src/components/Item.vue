@@ -21,8 +21,9 @@
           <el-tag type="info" class="info-tag">price: {{ itemData.price }}</el-tag>
         </el-col>
         <img v-if="itemData.imUrl" :src="itemData.imUrl" />
-        <el-col :span="24">
-          <p>description: <br />{{ itemData.description }}</p>
+        <el-col :span="24" style="padding: 20px">
+          <p>description: </p>
+          <p style="text-align: left">{{ itemData.description }}</p>
         </el-col>
       </template>
     </el-row>
